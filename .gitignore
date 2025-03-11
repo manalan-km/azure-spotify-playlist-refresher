@@ -1,6 +1,6 @@
 /AzuriteConfig
 /__blobstorage__
 /dist
-/host.json
 /local.settings.json
 /node_modules
+/azurite
