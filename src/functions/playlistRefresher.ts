@@ -11,11 +11,11 @@ export async function playlistRefresher(
     const playlistRefresher = new PlaylistRefresher(process.env.REFRESH_TOKEN!);
 
     context.log('Refresh start!');
-    playlistRefresher.refreshPlaylist();
+    await playlistRefresher.refreshPlaylist();
   }
 }
 
 app.timer('playlistRefresher', {
-  schedule: '0 0 * * *',
+  schedule: '*/1 * * * *',
   handler: playlistRefresher,
 });
