@@ -16,6 +16,6 @@ export async function playlistRefresher(
 }
 
 app.timer('playlistRefresher', {
-  schedule: '*/1 * * * *',
+  schedule: '0 30 10 * * *',
   handler: playlistRefresher,
 });
