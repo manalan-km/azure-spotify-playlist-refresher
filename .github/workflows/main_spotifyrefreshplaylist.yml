@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read #This is required for actions/checkout
-      
+
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
@@ -27,6 +27,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+
+      - name: 'Install PNPM'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: 'Resolve Project Dependencies Using Npm'
         shell: pwsh
@@ -55,14 +60,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6DB43A71FECC4D1D83685B7E4B52E269 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AB72379D6DF847699A439950C6C93AFE }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9BB54BF438EA43EF913017C51AE00E51 }}
-      
+
       - name: 'Set environment variables in Azure Function'
         run: |
           az functionapp config appsettings set \
@@ -77,4 +82,3 @@ jobs:
           app-name: 'SpotifyRefreshPlaylist'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          
